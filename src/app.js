@@ -71,18 +71,13 @@ app.post("/repositories/:id/like", (request, response) => {
   if (repositoryIndex < 0)
     return response.status(400).json(messageRepositoryNotFound);
 
-  const { url, title, techs, likes } = repositories[repositoryIndex];
+  repositories[repositoryIndex].likes++;
 
-  let likesInNumber = parseInt(likes);
-  const repository = { id, url, title, techs, likes: ++likesInNumber }
-
-  repositories[repositoryIndex] = repository;
-
-  return response.json(repository);
+  return response.json(repositories[repositoryIndex]);
 });
 
 function getRepositoryIndex(id) {
-  return repositories.findIndex(repository => repository.id == id);
+  return repositories.findIndex(repository => repository.id === id);
 }
 
 module.exports = app;
